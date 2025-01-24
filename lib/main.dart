@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:india_running/screens/CarouselScreen.dart';
+import 'package:india_running/screens/ProfileScreen.dart';
 import 'package:india_running/screens/homescreen.dart';
+import 'package:india_running/screens/searchscreen.dart';
+import 'package:india_running/screens/trendingeventscreen.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
-    );
-  }
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: HomeScreen(),
+    routes: {
+      '/profile': (context) => ProfileScreen(),
+      '/carousel': (context) => CarouselScreen(),
+      '/trending': (context) => TrendingEventsScreen(),
+      '/search': (context) => SearchScreen(),
+    },
+  ));
 }
