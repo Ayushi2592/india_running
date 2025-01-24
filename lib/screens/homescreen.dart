@@ -1,11 +1,10 @@
-import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:india_running/screens/CarouselScreen.dart';
-import 'package:india_running/screens/ProfileScreen.dart';
-import 'package:india_running/screens/searchscreen.dart';
-import 'package:india_running/screens/trendingeventscreen.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../app_constants.dart';
+import 'homescreenstatenotifier.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,41 +12,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> searchAlternates = ['race', 'city', 'event venue'];
-  String animatedSearchText = 'race';
-  Timer? _timer;
-
   @override
   void initState() {
     super.initState();
-    _startSearchTextAnimation();
-  }
-
-  void _startSearchTextAnimation() {
-    int index = 0;
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        animatedSearchText = searchAlternates[index];
-        index = (index + 1) % searchAlternates.length;
-      });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<HomeScreenStateNotifier>(context, listen: false)
+          .startSearchTextAnimation();
     });
   }
 
   @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final stateNotifier = Provider.of<HomeScreenStateNotifier>(context);
+    final animatedSearchText = stateNotifier.animatedSearchText;
+
     final List<Map<String, String>> eventData = [
-      {'image': 'images/poster1.png', 'cost': '₹525 onwards', 'distance': '2.5 km', 'location': 'New Delhi', 'race': 'Indian Navy Half Marathon'},
-      {'image': 'images/poster2.png', 'cost': '₹2500 onwards', 'distance': '1.8 km', 'location': 'Chandigarh', 'race': 'Chandigarh Fast Marathon'},
-      {'image': 'images/poster3.png', 'cost': '₹500 onwards', 'distance': '5 km', 'location': 'Amani Byrathikhane', 'race': 'Trail Adventure'},
-      {'image': 'images/poster4.png', 'cost': '₹30 onwards', 'distance': '3 km', 'location': 'Uptown', 'race': 'Night Run'},
-      {'image': 'images/poster5.png', 'cost': '₹10 onwards', 'distance': '0.8 km', 'location': 'Old Town', 'race': 'Fun Run'},
-      {'image': 'images/poster6.png', 'cost': '₹50 onwards', 'distance': '8 km', 'location': 'Outskirts', 'race': 'Ultra Marathon'},
+      {'image': AppImages.poster1, 'cost': '₹525 onwards', 'distance': '2.5 km', 'location': 'New Delhi', 'race': 'Indian Navy Half Marathon'},
+      {'image': AppImages.poster2, 'cost': '₹2500 onwards', 'distance': '1.8 km', 'location': 'Chandigarh', 'race': 'Chandigarh Fast Marathon'},
+      {'image': AppImages.poster3, 'cost': '₹500 onwards', 'distance': '5 km', 'location': 'Amani Byrathikhane', 'race': 'Trail Adventure'},
+      {'image': AppImages.poster4, 'cost': '₹30 onwards', 'distance': '3 km', 'location': 'Uptown', 'race': 'Night Run'},
+      {'image': AppImages.poster5, 'cost': '₹10 onwards', 'distance': '0.8 km', 'location': 'Old Town', 'race': 'Fun Run'},
+      {'image': AppImages.poster6, 'cost': '₹50 onwards', 'distance': '8 km', 'location': 'Outskirts', 'race': 'Ultra Marathon'},
     ];
 
     return Scaffold(
@@ -55,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Header Section
               Padding(
                 padding: AppPaddings.horizontal.add(AppPaddings.vertical),
                 child: Row(
@@ -63,21 +47,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Row(
                       children: [
-                        Image.asset('images/logo.png', height: 40),
+                        Image.asset(AppImages.logo, height: 40),
                         const SizedBox(width: 10),
                         const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('INDIA', style: AppTextStyles.logoText),
-                            Text('RUNNING', style: AppTextStyles.logoText),
+                            Text(AppText.appName, style: AppTextStyles.logoText),
+                            Text(AppText.appSecondName, style: AppTextStyles.logoText),
                           ],
                         ),
                       ],
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
-                      },
+                      onTap: () => context.push('/profile'),
                       child: const CircleAvatar(
                         radius: 20,
                         backgroundColor: AppColors.primaryLight,
@@ -91,14 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: AppPaddings.horizontal,
                 child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SearchScreen()),
-                    );
-                  },
+                  onTap: () => context.push('/search'),
                   child: TextField(
-                    enabled: false, // Disable direct interaction with the TextField
+                    enabled: false,
                     decoration: InputDecoration(
                       hintText: 'Search for $animatedSearchText...',
                       hintStyle: AppTextStyles.hintText,
@@ -113,26 +90,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 20),
-              // Carousel Slider
               GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => CarouselScreen()));
-                },
+                onTap: () => context.push('/carousel'),
                 child: CarouselSlider(
                   items: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16.0),
-                      child: Image.asset('images/image1.png', fit: BoxFit.cover),
+                      child: Image.asset(AppImages.image1, fit: BoxFit.cover),
                     ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16.0),
-                      child: Image.asset('images/image2.png', fit: BoxFit.cover),
+                      child: Image.asset(AppImages.image2, fit: BoxFit.cover),
                     ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16.0),
-                      child: Image.asset('images/image3.png', fit: BoxFit.cover),
+                      child: Image.asset(AppImages.image3, fit: BoxFit.cover),
                     ),
                   ],
                   options: CarouselOptions(
@@ -145,20 +118,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Trending Events Section
               const Padding(
                 padding: AppPaddings.horizontal,
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Trending Events', style: AppTextStyles.heading),
+                  child: Text(AppText.trendingEvents, style: AppTextStyles.heading),
                 ),
               ),
               const SizedBox(height: 10),
-              // Event Cards
               GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => TrendingEventsScreen()));
-                },
+                onTap: () => context.push('/trending'),
                 child: Column(
                   children: eventData.map((event) {
                     return Padding(
@@ -195,16 +164,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.location_on, size: 16, color: AppColors.textGrey),
-                                        const SizedBox(width: 5),
-                                        Text(event['location']!, style: AppTextStyles.subheading),
-                                      ],
-                                    ),
+                                    const Icon(Icons.location_on, size: 16, color: AppColors.textGrey),
+                                    const SizedBox(width: 5),
+                                    Text(event['location']!, style: AppTextStyles.subheading),
                                   ],
                                 ),
                                 Text(event['cost']!, style: AppTextStyles.price),
