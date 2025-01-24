@@ -1,60 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:india_running/screens/CarouselScreen.dart';
 import 'package:india_running/screens/ProfileScreen.dart';
 import 'package:india_running/screens/homescreen.dart';
-import 'package:india_running/screens/homescreenstatenotifier.dart';
+import 'package:india_running/screens/homescreenbloc.dart';
+import 'package:india_running/screens/homescreenevent.dart';
 import 'package:india_running/screens/searchscreen.dart';
 import 'package:india_running/screens/trendingeventscreen.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-
 
 void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (_) => HomeScreenStateNotifier(),
-      child: MyApp(),
-    ),
-  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GoRouter _router = GoRouter(
-      initialLocation: '/',  // Initial route
       routes: [
         GoRoute(
           path: '/',
-          builder: (context, state) => HomeScreen(),
+          builder: (context, state) => BlocProvider(
+            create: (context) => HomeScreenBloc()..add(StartSearchTextAnimation()),
+            child: HomeScreen(),
+          ),
         ),
         GoRoute(
           path: '/profile',
-          builder: (context, state) => ProfileScreen(),
+          builder: (context, state) => const ProfileScreen(),
         ),
         GoRoute(
           path: '/search',
-          builder: (context, state) => SearchScreen(),
+          builder: (context, state) => const SearchScreen(),
         ),
         GoRoute(
           path: '/carousel',
-          builder: (context, state) => CarouselScreen(),
+          builder: (context, state) => const CarouselScreen(),
         ),
         GoRoute(
           path: '/trending',
-          builder: (context, state) => TrendingEventsScreen(),
+          builder: (context, state) => const TrendingEventsScreen(),
         ),
       ],
     );
 
     return MaterialApp.router(
-      title: 'Flutter App',
+      routerConfig: _router,
+      title: 'My App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      routerConfig: _router,
     );
   }
 }
