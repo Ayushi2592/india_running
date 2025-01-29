@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         ),
         GoRoute(
           path: '/trending',
-          builder: (context, state) => TrendingEventsScreen(),
+          builder: (context, state) => TrendingEventScreen(),
         ),
       ],
     );
