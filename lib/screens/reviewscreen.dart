@@ -27,7 +27,7 @@ class _ReviewDetailsScreenState extends State<ReviewDetailsScreen> {
             Row(
               children: [
                 IconButton(
-                  icon: CircleAvatar(
+                  icon: const CircleAvatar(
                     radius: 20,
                     backgroundColor: AppColors.primaryLight,
                     child: Icon(
@@ -83,28 +83,28 @@ class _ReviewDetailsScreenState extends State<ReviewDetailsScreen> {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  Expanded(
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Indian Navy Half Marathon',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 8),
-                        const Text(
+                        SizedBox(height: 8),
+                        Text(
                           '5K',
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.grey,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: 8),
                         Row(
-                          children: const [
+                          children: [
                             Icon(Icons.location_on, size: 16, color: Colors.grey),
                             SizedBox(width: 4),
                             Expanded(
@@ -119,9 +119,9 @@ class _ReviewDetailsScreenState extends State<ReviewDetailsScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Row(
-                          children: const [
+                          children: [
                             Icon(Icons.calendar_today, size: 16, color: Colors.grey),
                             SizedBox(width: 4),
                             Text(

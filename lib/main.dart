@@ -3,6 +3,8 @@ import 'package:india_running/screens/CarouselScreen.dart';
 import 'package:india_running/screens/ProfileScreen.dart';
 import 'package:india_running/screens/homescreen.dart';
 import 'package:india_running/screens/homescreenstatenotifier.dart';
+import 'package:india_running/screens/registerscreen.dart';
+import 'package:india_running/screens/reviewscreen.dart';
 import 'package:india_running/screens/searchscreen.dart';
 import 'package:india_running/screens/trendingeventscreen.dart';
 import 'package:go_router/go_router.dart';
@@ -43,6 +45,14 @@ class MyApp extends StatelessWidget {
         GoRoute(
           path: '/trending',
           builder: (context, state) => TrendingEventScreen(),
+        ),
+        GoRoute(
+          path: '/register',
+          builder: (context, state) => RegisterScreen(),
+        ),
+        GoRoute(
+          path: '/review',
+          builder: (context, state) => ReviewDetailsScreen(),
         ),
       ],
     );

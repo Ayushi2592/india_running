@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:india_running/app_constants.dart';
-import 'package:india_running/screens/registerscreen.dart';
-import 'package:http/http.dart' as http;
 
 class TrendingEventScreen extends StatelessWidget {
   const TrendingEventScreen({Key? key}) : super(key: key);
@@ -23,7 +22,7 @@ class TrendingEventScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GestureDetector(
-                            onTap: () => Navigator.of(context).pop(),
+                            onTap: () => context.pop(),
                             child: const CircleAvatar(
                               radius: 20,
                               backgroundColor: AppColors.primaryLight,
@@ -79,18 +78,18 @@ class TrendingEventScreen extends StatelessWidget {
                             const SizedBox(height: 5),
 
                             // Event Location and Rating
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
                                   children: [
-                                    const Icon(Icons.location_on, size: 16, color: Colors.blue),
-                                    const SizedBox(width: 5),
+                                    Icon(Icons.location_on, size: 16, color: Colors.blue),
+                                    SizedBox(width: 5),
                                     Text('Location', style: AppTextStyles.subheading),
                                   ],
                                 ),
                                 Row(
-                                  children: const [
+                                  children: [
                                     Icon(Icons.star, color: Colors.yellow),
                                     SizedBox(width: 4),
                                     Text('4.5', style: TextStyle(fontSize: 16)),
@@ -101,8 +100,8 @@ class TrendingEventScreen extends StatelessWidget {
                             const SizedBox(height: 8),
 
                             // Event Date
-                            Row(
-                              children: const [
+                            const Row(
+                              children: [
                                 Icon(Icons.calendar_month, color: Colors.blue),
                                 SizedBox(width: 4),
                                 Text('02 Feb', style: TextStyle(fontSize: 16)),
@@ -126,7 +125,7 @@ class TrendingEventScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'This is a detailed explanation about the event. It includes all the details such as race type, participants, rules, and any additional information.\n This is a detailed explanation about the event. It includes all the details such as race type, participants, rules, and any additional information \n This is a detailed explanation about the event. It includes all the details such as race type, participants, rules, and any additional information',
+                            'This is a detailed explanation about the event. It includes all the details such as race type, participants, rules, and any additional information.',
                             style: TextStyle(fontSize: 16),
                           ),
                         ],
@@ -147,8 +146,9 @@ class TrendingEventScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Price Text
+                  // Price Text Aligned Right
                   const Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
                         '₹500',
@@ -171,26 +171,26 @@ class TrendingEventScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
 
-                  // Register Button
+                  // Register Button with Primary Border
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(20.0),
+                        side: const BorderSide(color: AppColors.primary, width: 2), // 🔹 Added Primary Border
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     onPressed: () {
-                      // Navigate to RegisterScreen
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const RegisterScreen(),
-                        ),
-                      );
+                      context.push('/register');
                     },
                     child: const Text(
                       'Register',
-                      style: TextStyle(fontSize: 18, color: AppColors.primary),
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],

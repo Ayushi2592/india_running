@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:india_running/screens/reviewscreen.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -61,9 +60,9 @@ class RegisterScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
+                        const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               '5K',
                               style: TextStyle(
@@ -99,10 +98,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ReviewDetailsScreen() ),
-                            );
+                            context.push('/review');
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.white, // Button color
