@@ -38,7 +38,7 @@ class EventCard extends StatelessWidget {
     required this.eventName,
     required this.eventLocation,
     required this.eventPrice,
-    required this.eventImage,
+    required this.eventImage, required event,
   });
 
   @override

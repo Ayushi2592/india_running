@@ -42,7 +42,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_constants.dart';
 import '../widgets/event_card.dart';
-import '../widgets/search_bar.dart';  // Make sure the import is correct
+import '../widgets/search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         eventName: event['race']!,
                         eventLocation: event['location']!,
                         eventPrice: event['cost']!,
-                        eventImage: event['image']!,
+                        eventImage: event['image']!, event: null,
                       ),
                     );
                   }).toList(),

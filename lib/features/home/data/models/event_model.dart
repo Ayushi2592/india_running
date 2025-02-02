@@ -6,7 +6,14 @@ class EventModel extends Event {
     required String race,
     required String location,
     required String cost,
-  }) : super(image: image, race: race, location: location, cost: cost);
+    required String title,
+  }) : super(
+    image: image,
+    race: race,
+    location: location,
+    cost: cost,
+    title: title,
+  );
 
   factory EventModel.fromJson(Map<String, dynamic> json) {
     return EventModel(
@@ -14,6 +21,7 @@ class EventModel extends Event {
       race: json['race'],
       location: json['location'],
       cost: json['cost'],
+      title: json['title'] ?? '',
     );
   }
 
@@ -23,6 +31,7 @@ class EventModel extends Event {
       'race': race,
       'location': location,
       'cost': cost,
+      'title': title,
     };
   }
 }
