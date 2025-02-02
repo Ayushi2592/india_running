@@ -13,7 +13,7 @@
 
 
 class FetchEventsUseCase {
-  FetchEventsUseCase();
+  FetchEventsUseCase(Object object);
 
   Future<List<String>> call() async {
     // Simulate fetching events (replace with your actual logic)

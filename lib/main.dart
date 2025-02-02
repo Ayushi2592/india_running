@@ -8,11 +8,11 @@ import 'features/home/presentation/screens/homescreen.dart';
 import 'features/home/presentation/screens/profilescreen.dart';
 import 'features/home/presentation/screens/searchscreen.dart';
 import 'features/home/presentation/screens/trendingeventscreen.dart';
+import 'features/trending_event/domain/usecases/get_trending_events.dart';
+import 'features/trending_event/presentation/bloc/event_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize dependency injection
   await initDependencies();
 
   runApp(MyApp());
@@ -52,14 +52,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'Clean Architecture App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.white,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => sl<HomeBloc>()..add(StartSearchTextAnimation())),
+        BlocProvider(create: (context) => EventBloc(sl<GetTrendingEvents>())),
+
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: Colors.white,
+        ),
+        routerConfig: _router,
       ),
-      routerConfig: _router,
     );
   }
 }
