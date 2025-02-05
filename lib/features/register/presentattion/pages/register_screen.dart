@@ -1,88 +1,141 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/data_sources/register_remote_data_source.dart';
-import '../../data/repositories/register_repository_impl.dart';
-import '../../domain/entities/register_repository.dart';
-import '../../domain/usecases/register_user.dart';
-import '../bloc/register_bloc.dart';
-import '../bloc/register_event.dart';
-import '../bloc/register_state.dart';
+import 'package:go_router/go_router.dart';
 
-class RegisterScreen extends StatefulWidget {
+import '../bloc/register_bloc.dart';
+
+
+class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Register")),
-      body: BlocProvider(
-        create: (_) => RegisterBloc(RegisterUser(RegisterRepositoryImpl(RegisterRemoteDataSource()))),
-        child: BlocConsumer<RegisterBloc, RegisterState>(
-          listener: (context, state) {
-            if (state is RegisterSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Registration successful!")),
-              );
-            } else if (state is RegisterFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
-              );
-            }
-          },
-          builder: (context, state) {
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(labelText: "Name"),
-                      validator: (value) => value!.isEmpty ? "Enter your name" : null,
-                    ),
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(labelText: "Email"),
-                      validator: (value) => value!.contains("@") ? null : "Enter a valid email",
-                    ),
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(labelText: "Password"),
-                      validator: (value) => value!.length >= 6 ? null : "Password must be at least 6 characters",
-                    ),
-                    SizedBox(height: 20),
-                    state is RegisterLoading
-                        ? CircularProgressIndicator()
-                        : ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          final user = RegisterEntity(
-                            name: _nameController.text,
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          );
-                          context.read<RegisterBloc>().add(SubmitRegister(user));
-                        }
-                      },
-                      child: Text("Register"),
-                    ),
-                  ],
-                ),
+    return BlocProvider(
+      create: (_) => RegisterBloc(),
+      child: Scaffold(
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Row(
+                    children: [
+                      SizedBox(width: 8),
+                      Text(
+                        'Select Category',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      context.pop(); // GoRouter navigation
+                    },
+                  ),
+                ],
               ),
-            );
-          },
+              const SizedBox(height: 10),
+              // List of categories
+              BlocBuilder<RegisterBloc, RegisterState>(
+                builder: (context, state) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 8,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '5K',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    'Rs 700 Inc. of all taxes',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    'Tshirt, Medal, Timed Bib',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    'Refreshment, E - Certificate',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              ElevatedButton(
+
+                                onPressed: () {
+                                  context.push('/review');
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.white, // Button color
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12), // Rounded corners
+                                  ),
+                                  side: const BorderSide(color: Colors.grey), // Border color
+                                ),
+                                child: const Text(
+                                  'Select',
+                                  style: TextStyle(
+                                    color: Colors.black, // Text color
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

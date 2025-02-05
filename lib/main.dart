@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:india_running/features/event_details/presentation/screens/event_screen.dart';
+import 'package:india_running/features/profile/presentation/screens/account_details.dart';
+import 'package:india_running/features/profile/presentation/screens/account_settings.dart';
 import 'core/injection_container.dart';
 import 'features/home/presentation/bloc/home_bloc.dart';
-import 'features/home/presentation/screens/carosuelscreen.dart';
 import 'features/home/presentation/screens/homescreen.dart';
-import 'features/home/presentation/screens/profilescreen.dart';
-import 'features/home/presentation/screens/searchscreen.dart';
-import 'features/home/presentation/screens/trendingeventscreen.dart';
-import 'features/trending_event/domain/usecases/get_trending_events.dart';
-import 'features/trending_event/presentation/bloc/event_bloc.dart';
+import 'features/profile/presentation/bloc/profile_bloc.dart';
+import 'features/profile/presentation/bloc/profile_event.dart';
+import 'features/profile/presentation/screens/profile_screen.dart';
+import 'features/register/presentattion/pages/register_screen.dart';
+import 'features/register/presentattion/pages/review_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initDependencies();
-
+  setupLocator(); // Initialize dependencies
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  // Define routes using `GoRouter`
   final GoRouter _router = GoRouter(
     routes: [
       GoRoute(
@@ -32,20 +32,32 @@ class MyApp extends StatelessWidget {
         ),
       ),
       GoRoute(
-        path: '/carousel',
-        builder: (context, state) => const CarouselScreen(),
+        path: '/trending',
+        builder: (context, state) => const TrendingEventScreen(),
+      ),
+      GoRoute(
+        path: '/review',
+        builder: (context, state) => const ReviewDetailsScreen(),
+      ),
+
+      GoRoute(
+        path: '/register',
+        builder: (context, state) => const RegisterScreen(),
+      ),
+      GoRoute(
+        path: '/account',
+        builder: (context, state) => const AccountDetailsScreen(),
+      ),
+      GoRoute(
+        path: '/accountsettings',
+        builder: (context, state) => const AccountSettingsScreen(),
       ),
       GoRoute(
         path: '/profile',
-        builder: (context, state) => const ProfileScreen(),
-      ),
-      GoRoute(
-        path: '/search',
-        builder: (context, state) => const SearchScreen(),
-      ),
-      GoRoute(
-        path: '/trending',
-        builder: (context, state) => const TrendingEventsScreen(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<ProfileBloc>()..add(LoadProfileEvent()),
+          child: const ProfileScreen(),
+        ),
       ),
     ],
   );
@@ -54,9 +66,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl<HomeBloc>()..add(StartSearchTextAnimation())),
-        BlocProvider(create: (context) => EventBloc(sl<GetTrendingEvents>())),
-
+        BlocProvider<HomeBloc>(
+          create: (context) => sl<HomeBloc>()..add(StartSearchTextAnimation()),
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => sl<ProfileBloc>()..add(LoadProfileEvent()),
+        ),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

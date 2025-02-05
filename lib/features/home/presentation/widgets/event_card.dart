@@ -25,7 +25,6 @@
     //);
   //}
 //}
-
 import 'package:flutter/material.dart';
 
 class EventCard extends StatelessWidget {
@@ -67,4 +66,3 @@ class EventCard extends StatelessWidget {
     );
   }
 }
-

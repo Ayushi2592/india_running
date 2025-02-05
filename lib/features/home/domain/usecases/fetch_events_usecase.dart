@@ -1,24 +1,27 @@
-//import '../entities/event.dart';
-//import '../repositories/event_repository.dart';
+//import 'package:india_running/features/home/domain/repositories/event_repository.dart';
+//import 'package:india_running/features/home/domain/entities/event_entities.dart';
+
 
 //class FetchEventsUseCase {
   //final EventRepository repository;
 
-  //FetchEventsUseCase(this.repository);
+  //FetchEventsUseCase(this.repository, {required  eventRepository});
 
   //Future<List<Event>> call() async {
-    //return await repository.fetchEvents();
+    //return eventRepository.fetchEvents();
   //}
 //}
 
+import 'package:india_running/features/home/domain/entities/event_entities.dart';
+import 'package:india_running/features/home/domain/repositories/event_repository.dart';
 
 class FetchEventsUseCase {
-  FetchEventsUseCase(Object object);
+  final EventRepository eventRepository;
 
-  Future<List<String>> call() async {
-    // Simulate fetching events (replace with your actual logic)
-    await Future.delayed(const Duration(seconds: 2));
-    return ['Event 1', 'Event 2', 'Event 3'];
+  FetchEventsUseCase({required this.eventRepository});
+
+  Future<List<Event>> call() async {
+    return await eventRepository.fetchEvents();
   }
 }
 
