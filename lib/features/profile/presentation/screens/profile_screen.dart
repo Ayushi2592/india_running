@@ -296,7 +296,7 @@ class ProfileScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          buildMenuItem(context, 'My Race', Icons.directions_run, '/my_race'),
+          buildMenuItem(context, 'My Race', Icons.directions_run, '/myraces'),
           const SizedBox(height: 10),
           const Divider(height: 1, color: Colors.grey),
           const SizedBox(height: 10),
@@ -309,7 +309,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  /// Second container is updated with red Logout text and icon
   Widget buildMenuContainer2(BuildContext context) {
     return Container(
       decoration: BoxDecoration(

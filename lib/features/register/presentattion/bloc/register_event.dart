@@ -1,4 +1,4 @@
-import '../../domain/entities/register_repository.dart';
+/*import '../../domain/entities/register_repository.dart';
 
 abstract class RegisterEvent {}
 
@@ -7,3 +7,11 @@ class SubmitRegister extends RegisterEvent {
 
   SubmitRegister(this.user);
 }
+*/
+part of 'register_bloc.dart';
+
+abstract class RegisterEvent {}
+
+class LoadCategoriesEvent extends RegisterEvent {}
+
+

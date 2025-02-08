@@ -15,3 +15,25 @@ class RegisterModel extends RegisterEntity {
     };
   }
 }
+
+
+
+/*import 'package:india_running/features/register/domain/entities/register_repository.dart';
+
+class RegisterModel extends RegisterEntity {
+  RegisterModel({
+    required String name,
+    required String price,
+    required String details,
+  }) : super(name: name, price: price, details: details);
+
+  factory RegisterModel.fromJson(Map<String, dynamic> json) {
+    return RegisterModel(
+      name: json['name'],
+      price: json['price'],
+      details: json['details'],
+    );
+  }
+}
+*/
+

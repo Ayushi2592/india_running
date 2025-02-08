@@ -26,18 +26,19 @@
   //}
 //}
 import 'package:flutter/material.dart';
+import 'package:india_running/features/home/domain/entities/event_entities.dart';
 
 class EventCard extends StatelessWidget {
   final String eventName;
-  final String eventLocation;
-  final String eventPrice;
-  final String eventImage;
+  final String eventVenue;
+  //final double eventminPrice;
+  final String eventbannerImage;
 
   EventCard({
     required this.eventName,
-    required this.eventLocation,
-    required this.eventPrice,
-    required this.eventImage, required event,
+    required this.eventVenue,
+    //required this.eventminPrice,
+    required this.eventbannerImage, required Event event,
   });
 
   @override
@@ -48,17 +49,24 @@ class EventCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(eventImage, height: 150, width: double.infinity, fit: BoxFit.cover),
+          // Use Image.network for online images
+          Image.network(eventbannerImage, height: 150, width: double.infinity, fit: BoxFit.cover),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(eventName, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            child: Text(
+              eventName,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
           ),
           Row(
             children: [
               Icon(Icons.location_on, size: 16, color: Colors.grey),
-              Text(eventLocation),
+              Text(eventVenue),
               Spacer(),
-              Text(eventPrice, style: TextStyle(color: Colors.green)),
+              //Text(
+                //'\$${eventminPrice.toStringAsFixed(2)}',
+                //style: TextStyle(color: Colors.green),
+              //),
             ],
           ),
         ],

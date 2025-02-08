@@ -110,7 +110,7 @@ class RegisterScreen extends StatelessWidget {
                                   context.push('/review');
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.white, // Button color
+                                    backgroundColor: Colors.white, // Button color
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12), // Rounded corners
                                   ),
@@ -141,3 +141,11 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+

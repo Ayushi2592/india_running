@@ -1,4 +1,4 @@
-import 'package:india_running/core/constants/app_constants.dart';
+/*import 'package:india_running/core/constants/app_constants.dart';
 
 import '../../../event_details/domain/repositories/event_repository.dart';
 import '../models/event_model.dart';
@@ -24,9 +24,8 @@ class EventRepositoryImpl implements EventRepository {
     ];
   }
 
-  @override
   Future<List<EventModel>> fetchEvents() async {
-    await Future.delayed(const Duration(seconds: 2));
+   await Future.delayed(const Duration(seconds: 2));
     return [
       EventModel(
         id: 2,
@@ -44,3 +43,55 @@ class EventRepositoryImpl implements EventRepository {
     ];
   }
 }
+
+ */
+
+import 'package:india_running/core/constants/app_constants.dart';
+
+import '../../../event_details/domain/repositories/event_repository.dart';
+import '../models/event_model.dart';
+
+class EventRepositoryImpl implements EventRepository {
+  @override
+  Future<List<EventModel>> getTrendingEvents() async {
+    await Future.delayed(const Duration(seconds: 2));
+    return [
+      EventModel(
+        id: 1,
+        name: 'India Navy',
+        venue: 'Location',
+        startDate: '02 Feb',
+        minPrice: 500,
+        rating: 4.5,
+        description: 'Event Description',
+        bannerImage: AppImages.poster5,
+        cost: 500.0,
+        race: '',
+      ),
+    ];
+  }
+
+  @override
+  Future<List<EventModel>> fetchEvents() async {
+    await Future.delayed(const Duration(seconds: 2));
+    return [
+      EventModel(
+        id: 2,
+        name: 'Marathon Run',
+        venue: 'Delhi',
+        startDate: '10 Feb',
+        minPrice: 750,
+        rating: 4.2,
+        description: 'Marathon event in Delhi',
+        bannerImage: AppImages.poster4,
+        cost: 750.0,
+        race: '',
+      ),
+    ];
+  }
+}
+
+
+
+
+

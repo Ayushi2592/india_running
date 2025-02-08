@@ -1,4 +1,4 @@
-class Event {
+/*class Event {
   final String name;
   final String location;
   final String cost;
@@ -35,3 +35,53 @@ class Event {
     );
   }
 }
+
+ */
+class Event {
+  final int id;
+  final String name;
+  final String venue;
+  final String bannerImage;
+  final String? startDate;
+  final double? minPrice;
+  final double? rating;
+  final String? description;
+
+  Event({
+    required this.id,
+    required this.name,
+    required this.venue,
+    required this.bannerImage,
+    this.startDate,
+    this.minPrice,
+    this.rating,
+    this.description,
+  });
+
+  factory Event.fromJson(Map<String, dynamic> json) {
+    return Event(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? 'Unknown',
+      venue: json['venue'] ?? 'Unknown',
+      bannerImage: json['banner_image'] ?? '',
+      startDate: json['start_date'],
+      minPrice: json['minPrice'] != null ? (json['minPrice'] as num).toDouble() : null,
+      rating: json['rating'] != null ? (json['rating'] as num).toDouble() : null,
+      description: json['description'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'venue': venue,
+      'banner_image': bannerImage,
+      'start_date': startDate,
+      'minPrice': minPrice,
+      'rating': rating,
+      'description': description,
+    };
+  }
+}
+

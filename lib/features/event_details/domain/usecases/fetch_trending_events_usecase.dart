@@ -10,3 +10,11 @@ class FetchTrendingEventsUseCase {
     return await eventRepository.getTrendingEvents();
   }
 }
+
+
+
+
+
+
+
+

@@ -11,3 +11,6 @@ class RegisterFailure extends RegisterState {
 
   RegisterFailure(this.message);
 }
+
+
+

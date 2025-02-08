@@ -1,4 +1,4 @@
-import '../../../../core/constants/app_constants.dart';
+/*import '../../../../core/constants/app_constants.dart';
 import '../../domain/repositories/event_repository.dart';
 import '../../domain/entities/event_entities.dart';
 
@@ -33,3 +33,52 @@ class EventRepositoryImpl implements EventRepository {
     return fetchEvents();
   }
 }
+
+ */
+
+
+
+import '../../domain/repositories/event_repository.dart';
+import '../datasources/home_remote_data_sources.dart';
+import '../../domain/entities/event_entities.dart' as entity;
+
+class EventRepositoryImpl implements EventRepository {
+  final HomeRemoteDataSource remoteDataSource;
+
+  EventRepositoryImpl(this.remoteDataSource);
+
+  @override
+  Future<List<entity.Event>> fetchEvents() async {
+    final events = await remoteDataSource.fetchEvents();
+    return events.map((event) => entity.Event(
+      id: event.id,
+      name: event.name,
+      venue: event.venue,
+      bannerImage: event.bannerImage,
+      startDate: event.startDate,
+      minPrice: event.minPrice != null ? event.minPrice!.toString() : '0.0',
+      rating: event.rating,
+      description: event.description, date: null, price: null, title: '', location: '',
+    )).toList();
+  }
+
+  @override
+  Future<List<entity.Event>> getTrendingEvents() async {
+    final events = await remoteDataSource.fetchEvents();
+    return events.map((event) => entity.Event(
+      id: event.id,
+      name: event.name,
+      venue: event.venue,
+      bannerImage: event.bannerImage,
+      startDate: event.startDate,
+      minPrice: event.minPrice != null ? event.minPrice!.toString() : '0.0',
+      rating: event.rating,
+      description: event.description, title: '', date: null, price: null, location: '',
+    )).toList();
+  }
+}
+
+
+
+
+
