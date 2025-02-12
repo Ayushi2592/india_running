@@ -356,7 +356,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                GestureDetector(
+                                /*GestureDetector(
                                   onTap: () =>
                                       context.push('/trending', extra: event),
                                   child: EventCard(
@@ -365,9 +365,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                     eventVenue: event.name,
                                     eventbannerImage: event.bannerImage ?? '',
                                   ),
+                                ),*/
+                                GestureDetector(
+                                        onTap: () {
+                                        final extraData = {
+                                        'eventId': event.id,          
+                                        'eventName': event.name,
+                                        'eventVenue': event.venue,
+                                        'eventBanner': event.bannerImage,
+                                     };
+                                      context.push('/trending', extra: extraData);
+                                    },
+                                    child: EventCard(
+                                       eventId: event.id,
+                                       event: event,
+                                       eventName: event.name,
+                                       eventVenue: event.venue,
+                                       eventbannerImage: event.bannerImage ,
+
+
+                                      ),
                                 ),
+
+
                                 const SizedBox(height: 8),
-                                Row(
+                                /*Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     _buildRoundLabel('5K'),
@@ -376,7 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     const SizedBox(width: 8),
                                     _buildRoundLabel('21.1K'),
                                   ],
-                                ),
+                                ),*/
                                 const SizedBox(height: 10),
                               ],
                             ),

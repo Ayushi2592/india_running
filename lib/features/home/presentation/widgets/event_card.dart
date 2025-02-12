@@ -25,16 +25,21 @@
     //);
   //}
 //}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 import 'package:flutter/material.dart';
 import 'package:india_running/features/home/domain/entities/event_entities.dart';
 
 class EventCard extends StatelessWidget {
+  final int eventId;
   final String eventName;
   final String eventVenue;
   //final double eventminPrice;
   final String eventbannerImage;
 
   EventCard({
+    required this.eventId,
     required this.eventName,
     required this.eventVenue,
     //required this.eventminPrice,
@@ -74,3 +79,4 @@ class EventCard extends StatelessWidget {
     );
   }
 }
+

@@ -805,7 +805,7 @@ class _ReviewDetailsScreenState extends State<ReviewDetailsScreen> {
         ),
         onPressed: _canProceed(isFormValid)
             ? () {
-                context.push('/nextScreen');  
+                context.push('/paymentscreen');  
               }
             : null,
         child: const Text(

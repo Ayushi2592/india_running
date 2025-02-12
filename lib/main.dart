@@ -154,21 +154,27 @@ class MyApp extends StatelessWidget {
 }
 
  */
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
+import 'package:india_running/features/event_details/domain/usecases/fetch_trending_events_usecase.dart';
 import 'package:india_running/features/home/presentation/screens/search.dart';
+import 'package:india_running/features/payment/payment_screen.dart';
 import 'package:india_running/features/profile/presentation/screens/certificates.dart';
 import 'package:india_running/features/profile/presentation/screens/emergency_details.dart';
 import 'package:india_running/features/profile/presentation/screens/personal_info.dart';
-
+import 'features/event_details/domain/repositories/event_repository.dart';
+import 'features/event_details/presentation/bloc/event_bloc.dart';
 import 'features/home/presentation/bloc/home_bloc.dart';
 import 'features/home/presentation/screens/homescreen.dart';
 import 'features/profile/presentation/bloc/profile_bloc.dart';
 import 'features/profile/presentation/bloc/profile_event.dart';
 import 'features/profile/presentation/screens/myraces.dart';
 import 'features/profile/presentation/screens/profile_screen.dart';
+import 'features/profile/presentation/screens/race_kit.dart';
 import 'features/register/presentattion/pages/register_screen.dart';
 import 'features/register/presentattion/pages/review_screen.dart';
 import 'features/profile/presentation/screens/account_details.dart';
@@ -206,8 +212,19 @@ class MyApp extends StatelessWidget {
         ),
         GoRoute(
           path: '/trending',
-          builder: (context, state) => const TrendingEventScreen(),
+          builder: (context, state) {
+            final eventData = state.extra as Map<String, dynamic>?;
+            return BlocProvider(
+              create: (context) => EventBloc(
+                fetchTrendingEventsUseCase: context.read<FetchTrendingEventsUseCase>(),
+                eventRepository: context.read<EventRepository>(),
+              )..add(FetchEventsEvent()),
+              child: TrendingEventScreen(eventData: eventData),
+            );
+          },
         ),
+
+
         GoRoute(
           path: '/review',
           builder: (context, state) => const ReviewDetailsScreen(),
@@ -217,6 +234,7 @@ class MyApp extends StatelessWidget {
           builder: (context, state) => const RegisterScreen(),
         ),
         GoRoute(
+
           path: '/account',
           builder: (context, state) => const AccountDetailsScreen(),
         ),
@@ -238,15 +256,23 @@ class MyApp extends StatelessWidget {
         ),
         GoRoute(
           path: '/search',
-          builder: (context, state) =>  Search(),
+          builder: (context, state) => Search(),
         ),
         GoRoute(
           path: '/address',
-          builder: (context, state) =>  const Address(),
+          builder: (context, state) => const Address(),
         ),
         GoRoute(
           path: '/emergency_details',
-          builder: (context, state) =>  const EmergencyDetails(),
+          builder: (context, state) => const EmergencyDetails(),
+        ),
+        GoRoute(
+          path: '/paymentscreen',
+          builder: (context, state) => PaymentScreen(),
+        ),
+        GoRoute(
+          path: '/race_kit',
+          builder: (context, state) => RaceKit(),
         ),
         GoRoute(
           path: '/profile',
@@ -268,3 +294,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

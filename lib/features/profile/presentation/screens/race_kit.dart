@@ -9,22 +9,16 @@ import '../../../../core/constants/app_constants.dart';
 
 
 
-class PersonalInfo extends StatefulWidget {
-  const PersonalInfo({super.key});
+class RaceKit extends StatefulWidget {
+  const RaceKit({super.key});
 
   @override
-  _PersonalInfoState createState() => _PersonalInfoState();
+  _RaceKitState createState() => _RaceKitState();
 }
 
-class _PersonalInfoState extends State<PersonalInfo> {
+class _RaceKitState extends State<RaceKit> {
   Map<String, String> userDetails = {
-    "Name": "--",
-    "Email ID": "--",
-    "Phone_no": "--",
-    "Gender": "--",
-    "DOB": "--",
-    "Nationality": "--",
-    "BloodGroup": "--"
+    "T-shirt Size": "--",
   };
   bool isLoading = true;
   bool hasError = false;
@@ -35,45 +29,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
     fetchUserData();
   }
 
-  /*Future<void> fetchUserData() async {
-  try {
-    final response = await http.get(Uri.parse(
-        'https://92a2-2407-3e40-11-cfce-3c62-fc1-70ec-a1b4.ngrok-free.app/userProfile/6'));
-
-    if (response.statusCode == 200) {
-      final decodedResponse = json.decode(response.body);
-      final data = decodedResponse['data'];
-      print(data);
-
-      setState(() {
-        userDetails = {
-          "Name": data['name'] ?? "--",
-          "Email ID": data['email'] ?? "--",
-          "Phone Number": data['phone'] ?? "--",
-          "gender": data['gender'] ?? "--",
-          "dob": data['dob'] ?? "--",
-          "nationality": data['origin'] ?? "--",
-          "bloodGroup": data['blood_group'] ?? "--"
-        };
-        isLoading = false;
-      });
-    } else {
-      setState(() {
-        hasError = true;
-        isLoading = false;
-      });
-    }
-  } catch (e) {
-    print("Error: $e");
-    setState(() {
-      hasError = true;
-      isLoading = false;
-    });
-  }
-}
-
-*/
-
   Future<void> fetchUserData() async {
     try {
       final response = await http.get(Uri.parse(
@@ -83,13 +38,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
         final data = json.decode(response.body);
         setState(() {
           userDetails = {
-            "Name": data['name'] ?? "Ayushi",
-            "Email ID": data['email'] ?? "--",
-            "Phone Number": data['phone_no'] ?? "--",
-            "Gender": data['gender'] ?? "--",
-            "DOB": data['dob'] ?? "--",
-            "Nationality": data['nationality'] ?? "--",
-            "BloodGroup": data['bloodGroup'] ?? "--"
+            "T-shirt Size": data['tshirtsize'] ?? "--",
           };
           isLoading = false;
         });
@@ -133,7 +82,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                 ),
                 const Expanded(
                   child: Text(
-                    'Personal Information',
+                    'Race Kit Shirt Size',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

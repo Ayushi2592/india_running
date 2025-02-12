@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:india_running/features/payment/payment_screen.dart';
 import 'package:india_running/features/profile/presentation/screens/account_settings.dart';
 import 'package:india_running/features/profile/presentation/screens/address.dart';
 import 'package:india_running/features/profile/presentation/screens/certificates.dart';
@@ -18,7 +19,10 @@ class AppRouter {
       case '/':
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case '/trending':
-        return MaterialPageRoute(builder: (_) => const TrendingEventScreen());
+        final eventData = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(
+          builder: (_) =>  TrendingEventScreen(eventData: eventData ),
+        );
       case '/register':
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case '/review':
@@ -38,7 +42,9 @@ class AppRouter {
       case '/address':
         return MaterialPageRoute(builder: (_) => const Address()); 
       case '/emergency_details':
-        return MaterialPageRoute(builder: (_) => const EmergencyDetails());    
+        return MaterialPageRoute(builder: (_) => const EmergencyDetails()); 
+      case '/paymentscreen':
+        return MaterialPageRoute(builder: (_) =>  PaymentScreen());      
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

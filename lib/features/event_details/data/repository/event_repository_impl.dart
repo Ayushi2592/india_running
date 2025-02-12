@@ -46,12 +46,15 @@ class EventRepositoryImpl implements EventRepository {
 
  */
 
-import 'package:india_running/core/constants/app_constants.dart';
+import 'package:dartz/dartz.dart';
 
+
+import '../../../../core/error/failures.dart';
 import '../../../event_details/domain/repositories/event_repository.dart';
+import '../datasources/event_remote_data_sources.dart';
 import '../models/event_model.dart';
 
-class EventRepositoryImpl implements EventRepository {
+/*class EventRepositoryImpl implements EventRepository {
   @override
   Future<List<EventModel>> getTrendingEvents() async {
     await Future.delayed(const Duration(seconds: 2));
@@ -72,7 +75,7 @@ class EventRepositoryImpl implements EventRepository {
   }
 
   @override
-  Future<List<EventModel>> fetchEvents() async {
+  Future<Either<Failure, Map<String, dynamic>>> fetchEvents(int eventId) async {
     await Future.delayed(const Duration(seconds: 2));
     return [
       EventModel(
@@ -90,6 +93,42 @@ class EventRepositoryImpl implements EventRepository {
     ];
   }
 }
+
+ */
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+class EventRepositoryImpl implements EventRepository {
+  final EventRemoteDataSource remoteDataSource;
+
+  EventRepositoryImpl(this.remoteDataSource);
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getEventDetails(eventId) async {
+    try {
+      final eventDetails = await remoteDataSource.fetchEventDetails(eventId as int);
+      return Right(eventDetails);
+    } catch (e) {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<List<EventModel>> fetchEvents() async {
+    
+    return []; 
+  }
+
+  @override
+  Future<List<EventModel>> getTrendingEvents() async {
+    
+    return [];  
+  }
+}
+
+
+
 
 
 

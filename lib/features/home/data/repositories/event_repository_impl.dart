@@ -66,7 +66,7 @@ class EventRepositoryImpl implements EventRepository {
   Future<List<entity.Event>> getTrendingEvents() async {
     final events = await remoteDataSource.fetchEvents();
     return events.map((event) => entity.Event(
-      id: event.id,
+     id: event.id,
       name: event.name,
       venue: event.venue,
       bannerImage: event.bannerImage,
